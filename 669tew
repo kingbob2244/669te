@@ -5145,7 +5145,7 @@ function Library:CreateWindow(...)
             local ViewportSizeYOffset = tonumber(workspace.CurrentCamera.ViewportSize.Y) - 35;
             Config.Size = UDim2.fromOffset(550, math.clamp(ViewportSizeYOffset, 200, 600))
         else
-            Config.Size = UDim2.fromOffset(700, 500) -- Adjusted width for centered tabs
+            Config.Size = UDim2.fromOffset(600, 500) -- Slightly taller for bottom tabs
         end
     end
 
@@ -5264,7 +5264,7 @@ function Library:CreateWindow(...)
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
         Position = UDim2.new(0, 4, 0, 4);
-        Size = UDim2.new(1, -8, 1, -36); -- Leave more space for bottom tabs
+        Size = UDim2.new(1, -8, 1, -30); -- Leave space for bottom tabs
         ZIndex = 2;
         Parent = MainSectionInner;
     });
@@ -5301,62 +5301,41 @@ function Library:CreateWindow(...)
         BorderColor3 = 'OutlineColor';
     });
 
-    -- MODIFIED: Bottom tabs container for centering
-    local BottomTabsContainer = Library:Create('Frame', {
-        BackgroundTransparency = 1;
-        Position = UDim2.new(0, 4, 1, -32);
-        Size = UDim2.new(1, -8, 0, 32);
-        ZIndex = 1;
+    -- MODIFIED: Bottom tabs area (centered horizontally)
+    local BottomTabArea = Library:Create('Frame', {
+        BackgroundTransparency = 1,
+        Position = UDim2.new(0.5, 0, 1, -26),
+        AnchorPoint = Vector2.new(0.5, 0),
+        Size = UDim2.new(1, -16, 0, 26),
+        ZIndex = 1,
         Parent = MainSectionInner;
     });
 
-    -- MODIFIED: Bottom tabs area (horizontal, centered)
-    local BottomTabArea = Library:Create('ScrollingFrame', {
-        ScrollingDirection = Enum.ScrollingDirection.X;
-        CanvasSize = UDim2.new(0, 0, 0, 0);
-        AutomaticCanvasSize = Enum.AutomaticSize.X;
-        ScrollBarThickness = 3;
-        ScrollBarImageColor3 = Library.AccentColor;
-        BackgroundTransparency = 1;
-        Position = UDim2.new(0.5, -0, 0, 0);
-        AnchorPoint = Vector2.new(0.5, 0);
-        Size = UDim2.new(1, -8, 0, 28);
-        ZIndex = 1;
-        Parent = BottomTabsContainer;
+    -- Create a container for the tabs that will center them
+    local TabContainer = Library:Create('Frame', {
+        BackgroundTransparency = 1,
+        Size = UDim2.new(1, 0, 1, 0),
+        Parent = BottomTabArea;
     });
 
-    Library:AddToRegistry(BottomTabArea, {
-        ScrollBarImageColor3 = 'AccentColor';
-    });
-
+    -- Create a UIListLayout with Center alignment
     local TabListLayout = Library:Create('UIListLayout', {
         Padding = UDim.new(0, Config.TabPadding);
         FillDirection = Enum.FillDirection.Horizontal;
         SortOrder = Enum.SortOrder.LayoutOrder;
+        HorizontalAlignment = Enum.HorizontalAlignment.Center;
         VerticalAlignment = Enum.VerticalAlignment.Center;
-        Parent = BottomTabArea;
+        Parent = TabContainer;
     });
 
-    -- Add left spacer
-    Library:Create('Frame', {
-        BackgroundColor3 = Library.BackgroundColor;
-        BorderColor3 = Library.OutlineColor;
-        Size = UDim2.new(0, 0, 0, 0);
-        LayoutOrder = -1;
-        BackgroundTransparency = 1;
-        ZIndex = 1;
-        Parent = BottomTabArea;
-    });
-
-    -- Add right spacer
-    Library:Create('Frame', {
-        BackgroundColor3 = Library.BackgroundColor;
-        BorderColor3 = Library.OutlineColor;
-        Size = UDim2.new(0, 0, 0, 0);
-        LayoutOrder = 9999999;
-        BackgroundTransparency = 1;
-        ZIndex = 1;
-        Parent = BottomTabArea;
+    -- Add a UIListLayout to handle centering
+    Library:Create('UIListLayout', {
+        Padding = UDim.new(0, Config.TabPadding);
+        FillDirection = Enum.FillDirection.Horizontal;
+        SortOrder = Enum.SortOrder.LayoutOrder;
+        HorizontalAlignment = Enum.HorizontalAlignment.Center;
+        VerticalAlignment = Enum.VerticalAlignment.Center;
+        Parent = TabContainer;
     });
 
     function Window:SetWindowTitle(Title)
@@ -5375,14 +5354,14 @@ function Library:CreateWindow(...)
         };
 
         -- Create bottom tab button
-        local TabButtonWidth = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 16;
+        local TabButtonWidth = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 12;
         
         local TabButton = Library:Create('Frame', {
             BackgroundColor3 = Library.BackgroundColor;
             BorderColor3 = Library.OutlineColor;
-            Size = UDim2.new(0, TabButtonWidth, 0.85, 0);
+            Size = UDim2.new(0, TabButtonWidth, 0, 22);
             ZIndex = 1;
-            Parent = BottomTabArea;
+            Parent = TabContainer;
         });
 
         -- Add corner rounding to tab button
@@ -5691,8 +5670,8 @@ function Library:CreateWindow(...)
         function Tab:SetName(Name)
             if typeof(Name) == "string" then
                 Tab.Name = Name;
-                local TabButtonWidth = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 16;
-                TabButton.Size = UDim2.new(0, TabButtonWidth, 0.85, 0);
+                local TabButtonWidth = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 12;
+                TabButton.Size = UDim2.new(0, TabButtonWidth, 0, 22);
                 TabButtonLabel.Text = Tab.Name;
             end
         end;
