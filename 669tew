@@ -4821,7 +4821,7 @@ function Library:Notify(...)
     return Data
 end;
 
--- MODIFIED: Changed layout to horizontal with tabs on left side
+-- MODIFIED: Tabs at bottom center
 function Library:CreateWindow(...)
     local Arguments = { ... }
     local Config = { AnchorPoint = Vector2.zero }
@@ -4845,7 +4845,7 @@ function Library:CreateWindow(...)
             local ViewportSizeYOffset = tonumber(workspace.CurrentCamera.ViewportSize.Y) - 35;
             Config.Size = UDim2.fromOffset(550, math.clamp(ViewportSizeYOffset, 200, 600))
         else
-            Config.Size = UDim2.fromOffset(800, 500) -- Made wider for horizontal layout
+            Config.Size = UDim2.fromOffset(550, 600)
         end
     end
 
@@ -4905,12 +4905,11 @@ function Library:CreateWindow(...)
         Parent = Inner;
     });
 
-    -- MODIFIED: Main section with horizontal layout (tabs on left, content on right)
     local MainSectionOuter = Library:Create('Frame', {
         BackgroundColor3 = Library.BackgroundColor;
         BorderColor3 = Library.OutlineColor;
         Position = UDim2.new(0, 8, 0, 25);
-        Size = UDim2.new(1, -16, 1, -33);
+        Size = UDim2.new(1, -16, 1, -60); -- Made room for tabs at bottom
         ZIndex = 1;
         Parent = Inner;
     });
@@ -4934,38 +4933,37 @@ function Library:CreateWindow(...)
         BackgroundColor3 = 'BackgroundColor';
     });
 
-    -- MODIFIED: Left side tabs area (vertical)
-    local LeftTabArea = Library:Create('ScrollingFrame', {
-        ScrollingDirection = Enum.ScrollingDirection.Y;
-        CanvasSize = UDim2.new(0, 0, 0, 0);
-        AutomaticCanvasSize = Enum.AutomaticSize.Y;
-        ScrollBarThickness = 3;
-        ScrollBarImageColor3 = Library.AccentColor;
+    -- MODIFIED: Tab area at bottom
+    local TabArea = Library:Create('Frame', {
         BackgroundTransparency = 1;
-        Position = UDim2.new(0, 4, 0, 4);
-        Size = UDim2.new(0, 120, 1, -8);
-        ZIndex = 1;
+        Position = UDim2.new(0, 0, 1, -25);
+        Size = UDim2.new(1, 0, 0, 25);
+        ZIndex = 10;
         Parent = MainSectionInner;
     });
 
-    Library:AddToRegistry(LeftTabArea, {
-        ScrollBarImageColor3 = 'AccentColor';
-    });
-
+    -- Center tabs using UIListLayout with center alignment
     local TabListLayout = Library:Create('UIListLayout', {
         Padding = UDim.new(0, Config.TabPadding);
-        FillDirection = Enum.FillDirection.Vertical;
-        SortOrder = Enum.SortOrder.LayoutOrder;
+        FillDirection = Enum.FillDirection.Horizontal;
         HorizontalAlignment = Enum.HorizontalAlignment.Center;
-        Parent = LeftTabArea;
+        SortOrder = Enum.SortOrder.LayoutOrder;
+        VerticalAlignment = Enum.VerticalAlignment.Center;
+        Parent = TabArea;
     });
 
-    -- MODIFIED: Right side content area
+    -- Add padding on sides to ensure centering
+    Library:Create('UIPadding', {
+        PaddingLeft = UDim.new(0, 10),
+        PaddingRight = UDim.new(0, 10),
+        Parent = TabArea;
+    });
+
     local TabContainer = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
-        Position = UDim2.new(0, 130, 0, 4);
-        Size = UDim2.new(1, -138, 1, -8);
+        Position = UDim2.new(0, 8, 0, 4);
+        Size = UDim2.new(1, -16, 1, -29);
         ZIndex = 2;
         Parent = MainSectionInner;
     });
@@ -4996,23 +4994,24 @@ function Library:CreateWindow(...)
         end
     end;
 
-    -- MODIFIED: Updated AddTab for horizontal layout
     function Window:AddTab(Name)
         local Tab = {
             Groupboxes = {};
             Tabboxes = {};
+
             OriginalName = Name; Name = Name;
         };
 
-        -- Create vertical tab button
-        local TabButtonHeight = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 8;
-        
+        -- MODIFIED: Create tab button with fixed height for bottom placement
+        local TabButtonWidth = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 12;
+        local TabButtonHeight = 20;
+
         local TabButton = Library:Create('Frame', {
             BackgroundColor3 = Library.BackgroundColor;
             BorderColor3 = Library.OutlineColor;
-            Size = UDim2.new(1, -4, 0, TabButtonHeight);
-            ZIndex = 1;
-            Parent = LeftTabArea;
+            Size = UDim2.new(0, TabButtonWidth, 0, TabButtonHeight);
+            ZIndex = 11;
+            Parent = TabArea;
         });
 
         Library:AddToRegistry(TabButton, {
@@ -5025,19 +5024,19 @@ function Library:CreateWindow(...)
             Size = UDim2.new(1, -8, 1, -4);
             Text = Tab.Name;
             TextSize = 14;
-            TextWrapped = true;
-            RichText = true; -- Added to support color fonts
-            ZIndex = 1;
+            TextWrapped = false;
+            RichText = true;
+            ZIndex = 12;
             Parent = TabButton;
         });
 
         local Blocker = Library:Create('Frame', {
             BackgroundColor3 = Library.MainColor;
             BorderSizePixel = 0;
-            Position = UDim2.new(1, -1, 0, 0);
-            Size = UDim2.new(0, 1, 1, 0);
+            Position = UDim2.new(0, 0, 1, -1);
+            Size = UDim2.new(1, 0, 0, 1);
             BackgroundTransparency = 1;
-            ZIndex = 3;
+            ZIndex = 13;
             Parent = TabButton;
         });
 
@@ -5045,7 +5044,6 @@ function Library:CreateWindow(...)
             BackgroundColor3 = 'MainColor';
         });
 
-        -- Tab content frame
         local TabFrame = Library:Create('Frame', {
             Name = 'TabFrame',
             BackgroundTransparency = 1;
@@ -5056,9 +5054,9 @@ function Library:CreateWindow(...)
             Parent = TabContainer;
         });
 
-        -- Top warning bar (same as original)
-        local TopBar, TopBarInner, TopBarLabel, TopBarTextLabel, TopBarLabelStroke, TopBarHighlight; 
-        do
+        local TopBarLabelStroke
+        local TopBarHighlight
+        local TopBar, TopBarInner, TopBarLabel, TopBarTextLabel; do
             TopBar = Library:Create('Frame', {
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Color3.fromRGB(248, 51, 51);
@@ -5127,7 +5125,6 @@ function Library:CreateWindow(...)
             });
         end
         
-        -- Left and right content sides (same as original)
         local LeftSide = Library:Create('ScrollingFrame', {
             BackgroundTransparency = 1;
             BorderSizePixel = 0;
@@ -5303,8 +5300,8 @@ function Library:CreateWindow(...)
         function Tab:SetName(Name)
             if typeof(Name) == "string" then
                 Tab.Name = Name;
-                local TabButtonHeight = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 8;
-                TabButton.Size = UDim2.new(1, -4, 0, TabButtonHeight);
+                local TabButtonWidth = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 12;
+                TabButton.Size = UDim2.new(0, TabButtonWidth, 0, 20);
                 TabButtonLabel.Text = Tab.Name;
             end
         end;
@@ -5807,7 +5804,6 @@ function Library:CreateWindow(...)
             Library:Toggle()
         end)
 
-        -- Lock UI button
         local LockUIOuter = Library:Create('Frame', {
             BorderColor3 = Color3.new(0, 0, 0);
             Position = UDim2.new(0.008, 0, 0.075, 0);
