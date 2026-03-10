@@ -536,6 +536,12 @@ function Library:AddToolTip(InfoStr, DisabledInfoStr, HoverInstance)
         Visible = false;
     });
 
+    -- Add corner rounding to tooltips
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 4);
+        Parent = Tooltip;
+    });
+
     local Label = Library:CreateLabel({
         Position = UDim2.fromOffset(3, 1);
         
@@ -864,6 +870,12 @@ do
             Parent = ToggleLabel;
         });
 
+        -- Add corner rounding to color picker display
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = DisplayFrame;
+        });
+
         -- Transparency image taken from https://github.com/matas3535/SplixPrivateDrawingLibrary/blob/main/Library.lua cus i'm lazy
         local CheckerFrame = Library:Create('ImageLabel', {
             BorderSizePixel = 0;
@@ -872,6 +884,12 @@ do
             Image = 'http://www.roblox.com/asset/?id=12977615774';
             Visible = not not Info.Transparency;
             Parent = DisplayFrame;
+        });
+
+        -- Add corner rounding to checker frame
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = CheckerFrame;
         });
 
         -- 1/16/23
@@ -890,6 +908,12 @@ do
             Parent = ScreenGui,
         });
 
+        -- Add corner rounding to color picker outer frame
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = PickerFrameOuter;
+        });
+
         DisplayFrame:GetPropertyChangedSignal('AbsolutePosition'):Connect(function()
             PickerFrameOuter.Position = UDim2.fromOffset(DisplayFrame.AbsolutePosition.X, DisplayFrame.AbsolutePosition.Y + 18);
         end)
@@ -901,6 +925,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 16;
             Parent = PickerFrameOuter;
+        });
+
+        -- Add corner rounding to color picker inner frame
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = PickerFrameInner;
         });
 
         local Highlight = Library:Create('Frame', {
@@ -928,12 +958,24 @@ do
             Parent = SatVibMapOuter;
         });
 
+        -- Add corner rounding to sat/vib map
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = SatVibMapInner;
+        });
+
         local SatVibMap = Library:Create('ImageLabel', {
             BorderSizePixel = 0;
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 18;
             Image = 'rbxassetid://4155801252';
             Parent = SatVibMapInner;
+        });
+
+        -- Add corner rounding to sat/vib image
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = SatVibMap;
         });
 
         local CursorOuter = Library:Create('ImageLabel', {
@@ -971,6 +1013,12 @@ do
             Parent = HueSelectorOuter;
         });
 
+        -- Add corner rounding to hue selector
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = HueSelectorInner;
+        });
+
         local HueCursor = Library:Create('Frame', { 
             BackgroundColor3 = Color3.new(1, 1, 1);
             AnchorPoint = Vector2.new(0, 0.5);
@@ -995,6 +1043,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 18,
             Parent = HueBoxOuter;
+        });
+
+        -- Add corner rounding to hex box
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = HueBoxInner;
         });
 
         Library:Create('UIGradient', {
@@ -1038,6 +1092,12 @@ do
             RichText = true; -- Added to support color fonts
         });
 
+        -- Add corner rounding to RGB box
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = RgbBoxBase.Frame;
+        });
+
         local TransparencyBoxOuter, TransparencyBoxInner, TransparencyCursor;
         
         if Info.Transparency then 
@@ -1058,6 +1118,12 @@ do
                 Parent = TransparencyBoxOuter;
             });
 
+            -- Add corner rounding to transparency box
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 4);
+                Parent = TransparencyBoxInner;
+            });
+
             Library:AddToRegistry(TransparencyBoxInner, { BorderColor3 = 'OutlineColor' });
 
             Library:Create('ImageLabel', {
@@ -1066,6 +1132,12 @@ do
                 Image = 'http://www.roblox.com/asset/?id=12978095818';
                 ZIndex = 20;
                 Parent = TransparencyBoxInner;
+            });
+
+            -- Add corner rounding to transparency image
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 4);
+                Parent = Library:Create('Frame', {Parent = TransparencyBoxInner});
             });
 
             TransparencyCursor = Library:Create('Frame', { 
@@ -1101,12 +1173,24 @@ do
                 Parent = ScreenGui
             })
 
+            -- Add corner rounding to context menu
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 6);
+                Parent = ContextMenu.Container;
+            });
+
             ContextMenu.Inner = Library:Create('Frame', {
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Library.OutlineColor;
                 BorderMode = Enum.BorderMode.Inset;
                 Size = UDim2.fromScale(1, 1);
                 ZIndex = 15;
+                Parent = ContextMenu.Inner;
+            });
+
+            -- Add corner rounding to context menu inner
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 6);
                 Parent = ContextMenu.Inner;
             });
 
@@ -1473,6 +1557,12 @@ do
             Parent = ToggleLabel;
         });
 
+        -- Add corner rounding to key picker outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = PickOuter;
+        });
+
         local PickInner = Library:Create('Frame', {
             BackgroundColor3 = Library.BackgroundColor;
             BorderColor3 = Library.OutlineColor;
@@ -1480,6 +1570,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 7;
             Parent = PickOuter;
+        });
+
+        -- Add corner rounding to key picker inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = PickInner;
         });
 
         Library:AddToRegistry(PickInner, {
@@ -1506,6 +1602,12 @@ do
             Parent = ScreenGui;
         });
 
+        -- Add corner rounding to mode select outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = ModeSelectOuter;
+        });
+
         ToggleLabel:GetPropertyChangedSignal('AbsolutePosition'):Connect(function()
             ModeSelectOuter.Position = UDim2.fromOffset(ToggleLabel.AbsolutePosition.X + ToggleLabel.AbsoluteSize.X + 4, ToggleLabel.AbsolutePosition.Y + 1);
         end);
@@ -1517,6 +1619,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 15;
             Parent = ModeSelectOuter;
+        });
+
+        -- Add corner rounding to mode select inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = ModeSelectInner;
         });
 
         Library:AddToRegistry(ModeSelectInner, {
@@ -1551,6 +1659,12 @@ do
                 Parent = KeybindsToggleContainer;
             });
 
+            -- Add corner rounding to keybinds toggle outer
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 4);
+                Parent = KeybindsToggleOuter;
+            });
+
             Library:AddToRegistry(KeybindsToggleOuter, {
                 BorderColor3 = 'Black';
             });
@@ -1562,6 +1676,12 @@ do
                 Size = UDim2.new(1, 0, 1, 0);
                 ZIndex = 111;
                 Parent = KeybindsToggleOuter;
+            });
+
+            -- Add corner rounding to keybinds toggle inner
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 4);
+                Parent = KeybindsToggleInner;
             });
 
             Library:AddToRegistry(KeybindsToggleInner, {
@@ -1961,6 +2081,12 @@ do
             Name = "drodpwon_outer";
         });
 
+        -- Add corner rounding to dropdown outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = DropdownOuter;
+        });
+
         Library:AddToRegistry(DropdownOuter, {
             BorderColor3 = 'Black';
         });
@@ -1972,6 +2098,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 6;
             Parent = DropdownOuter;
+        });
+
+        -- Add corner rounding to dropdown inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = DropdownInner;
         });
 
         Library:AddToRegistry(DropdownInner, {
@@ -2067,6 +2199,12 @@ do
             Parent = ScreenGui;
         });
 
+        -- Add corner rounding to dropdown list outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = ListOuter;
+        });
+
         local function RecalculateListPosition()
             ListOuter.Position = UDim2.fromOffset(DropdownOuter.AbsolutePosition.X, DropdownOuter.AbsolutePosition.Y + DropdownOuter.Size.Y.Offset + 1);
         end;
@@ -2090,6 +2228,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 21;
             Parent = ListOuter;
+        });
+
+        -- Add corner rounding to dropdown list inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = ListInner;
         });
 
         Library:AddToRegistry(ListInner, {
@@ -2203,6 +2347,12 @@ do
                     Text = '';
                     ZIndex = 23;
                     Parent = Scrolling;
+                });
+
+                -- Add corner rounding to dropdown buttons
+                Library:Create('UICorner', {
+                    CornerRadius = UDim.new(0, 4);
+                    Parent = Button;
                 });
 
                 Library:AddToRegistry(Button, {
@@ -2665,6 +2815,12 @@ do
                 ZIndex = 5;
             });
 
+            -- Add corner rounding to button outer
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 6);
+                Parent = Outer;
+            });
+
             local Inner = Library:Create('Frame', {
                 BackgroundColor3 = Library.MainColor;
                 BorderColor3 = Library.OutlineColor;
@@ -2672,6 +2828,12 @@ do
                 Size = UDim2.new(1, 0, 1, 0);
                 ZIndex = 6;
                 Parent = Outer;
+            });
+
+            -- Add corner rounding to button inner
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 6);
+                Parent = Inner;
             });
 
             local Label = Library:CreateLabel({
@@ -2917,6 +3079,12 @@ do
             Parent = Container;
         });
 
+        -- Add corner rounding to divider outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = DividerOuter;
+        });
+
         local DividerInner = Library:Create('Frame', {
             BackgroundColor3 = Library.MainColor;
             BorderColor3 = Library.OutlineColor;
@@ -2924,6 +3092,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 6;
             Parent = DividerOuter;
+        });
+
+        -- Add corner rounding to divider inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = DividerInner;
         });
 
         Library:AddToRegistry(DividerOuter, {
@@ -2981,6 +3155,12 @@ do
             Parent = Container;
         });
 
+        -- Add corner rounding to textbox outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = TextBoxOuter;
+        });
+
         local TextBoxInner = Library:Create('Frame', {
             BackgroundColor3 = Library.MainColor;
             BorderColor3 = Library.OutlineColor;
@@ -2988,6 +3168,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 6;
             Parent = TextBoxOuter;
+        });
+
+        -- Add corner rounding to textbox inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = TextBoxInner;
         });
 
         Library:AddToRegistry(TextBoxInner, {
@@ -3214,6 +3400,12 @@ do
             Parent = Container;
         });
 
+        -- Add corner rounding to toggle outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = ToggleOuter;
+        });
+
         Library:AddToRegistry(ToggleOuter, {
             BorderColor3 = 'Black';
         });
@@ -3225,6 +3417,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 6;
             Parent = ToggleOuter;
+        });
+
+        -- Add corner rounding to toggle inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 4);
+            Parent = ToggleInner;
         });
 
         Library:AddToRegistry(ToggleInner, {
@@ -3460,6 +3658,12 @@ do
             Parent = Container;
         });
 
+        -- Add corner rounding to slider outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = SliderOuter;
+        });
+
         SliderOuter:GetPropertyChangedSignal('AbsoluteSize'):Connect(function()
             Slider.MaxSize = SliderOuter.AbsoluteSize.X - 2;
         end);
@@ -3477,6 +3681,12 @@ do
             Parent = SliderOuter;
         });
 
+        -- Add corner rounding to slider inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = SliderInner;
+        });
+
         Library:AddToRegistry(SliderInner, {
             BackgroundColor3 = 'MainColor';
             BorderColor3 = 'OutlineColor';
@@ -3488,6 +3698,12 @@ do
             Size = UDim2.new(0, 0, 1, 0);
             ZIndex = 7;
             Parent = SliderInner;
+        });
+
+        -- Add corner rounding to fill
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = Fill;
         });
 
         Library:AddToRegistry(Fill, {
@@ -3820,6 +4036,12 @@ do
             Parent = Container;
         });
 
+        -- Add corner rounding to dropdown outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = DropdownOuter;
+        });
+
         Library:AddToRegistry(DropdownOuter, {
             BorderColor3 = 'Black';
         });
@@ -3831,6 +4053,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 6;
             Parent = DropdownOuter;
+        });
+
+        -- Add corner rounding to dropdown inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = DropdownInner;
         });
 
         Library:AddToRegistry(DropdownInner, {
@@ -3926,6 +4154,12 @@ do
             Parent = ScreenGui;
         });
 
+        -- Add corner rounding to dropdown list outer
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = ListOuter;
+        });
+
         local function RecalculateListPosition()
             ListOuter.Position = UDim2.fromOffset(DropdownOuter.AbsolutePosition.X, DropdownOuter.AbsolutePosition.Y + DropdownOuter.Size.Y.Offset + 1);
         end;
@@ -3948,6 +4182,12 @@ do
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 21;
             Parent = ListOuter;
+        });
+
+        -- Add corner rounding to dropdown list inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = ListInner;
         });
 
         Library:AddToRegistry(ListInner, {
@@ -4062,6 +4302,12 @@ do
                     Text = '';
                     ZIndex = 23;
                     Parent = Scrolling;
+                });
+
+                -- Add corner rounding to dropdown buttons
+                Library:Create('UICorner', {
+                    CornerRadius = UDim.new(0, 4);
+                    Parent = Button;
                 });
 
                 Library:AddToRegistry(Button, {
@@ -4526,6 +4772,12 @@ do
         Parent = ScreenGui;
     });
 
+    -- Add corner rounding to watermark
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = WatermarkOuter;
+    });
+
     local WatermarkInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.AccentColor;
@@ -4533,6 +4785,12 @@ do
         Size = UDim2.new(1, 0, 1, 0);
         ZIndex = 201;
         Parent = WatermarkOuter;
+    });
+
+    -- Add corner rounding to watermark inner
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = WatermarkInner;
     });
 
     Library:AddToRegistry(WatermarkInner, {
@@ -4546,6 +4804,12 @@ do
         Size = UDim2.new(1, -2, 1, -2);
         ZIndex = 202;
         Parent = WatermarkInner;
+    });
+
+    -- Add corner rounding to watermark inner frame
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = InnerFrame;
     });
 
     local Gradient = Library:Create('UIGradient', {
@@ -4590,6 +4854,12 @@ do
         Parent = ScreenGui;
     });
 
+    -- Add corner rounding to keybind frame
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = KeybindOuter;
+    });
+
     local KeybindInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
@@ -4597,6 +4867,12 @@ do
         Size = UDim2.new(1, 0, 1, 0);
         ZIndex = 101;
         Parent = KeybindOuter;
+    });
+
+    -- Add corner rounding to keybind inner
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = KeybindInner;
     });
 
     Library:AddToRegistry(KeybindInner, {
@@ -4696,6 +4972,12 @@ function Library:Notify(...)
         Parent = if Side == "left" then Library.LeftNotificationArea else Library.RightNotificationArea;
     });
 
+    -- Add corner rounding to notification
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = NotifyOuter;
+    });
+
     local NotifyInner = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
@@ -4703,6 +4985,12 @@ function Library:Notify(...)
         Size = UDim2.new(1, 0, 1, 0);
         ZIndex = 101;
         Parent = NotifyOuter;
+    });
+
+    -- Add corner rounding to notification inner
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = NotifyInner;
     });
 
     Library:AddToRegistry(NotifyInner, {
@@ -4717,6 +5005,12 @@ function Library:Notify(...)
         Size = UDim2.new(1, -2, 1, -2);
         ZIndex = 102;
         Parent = NotifyInner;
+    });
+
+    -- Add corner rounding to notification inner frame
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = InnerFrame;
     });
 
     local Gradient = Library:Create('UIGradient', {
@@ -4757,6 +5051,12 @@ function Library:Notify(...)
         Size = UDim2.new(0, 3, 1, 2);
         ZIndex = 104;
         Parent = NotifyOuter;
+    });
+
+    -- Add corner rounding to side color
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 8);
+        Parent = SideColor;
     });
 
     function Data:Resize()
@@ -4821,7 +5121,7 @@ function Library:Notify(...)
     return Data
 end;
 
--- MODIFIED: Tabs at bottom center
+-- MODIFIED: Changed layout to have tabs at the bottom
 function Library:CreateWindow(...)
     local Arguments = { ... }
     local Config = { AnchorPoint = Vector2.zero }
@@ -4845,7 +5145,7 @@ function Library:CreateWindow(...)
             local ViewportSizeYOffset = tonumber(workspace.CurrentCamera.ViewportSize.Y) - 35;
             Config.Size = UDim2.fromOffset(550, math.clamp(ViewportSizeYOffset, 200, 600))
         else
-            Config.Size = UDim2.fromOffset(550, 600)
+            Config.Size = UDim2.fromOffset(600, 500) -- Slightly taller for bottom tabs
         end
     end
 
@@ -4873,6 +5173,13 @@ function Library:CreateWindow(...)
         ZIndex = 1;
         Parent = ScreenGui;
     });
+
+    -- Add corner rounding to main window
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 12);
+        Parent = Outer;
+    });
+
     LibraryMainOuterFrame = Outer;
     Library:MakeDraggable(Outer, 25, true);
 
@@ -4890,6 +5197,12 @@ function Library:CreateWindow(...)
         Parent = Outer;
     });
 
+    -- Add corner rounding to inner window
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 12);
+        Parent = Inner;
+    });
+
     Library:AddToRegistry(Inner, {
         BackgroundColor3 = 'MainColor';
         BorderColor3 = 'AccentColor';
@@ -4905,13 +5218,20 @@ function Library:CreateWindow(...)
         Parent = Inner;
     });
 
+    -- MODIFIED: Main section with tabs at the bottom
     local MainSectionOuter = Library:Create('Frame', {
         BackgroundColor3 = Library.BackgroundColor;
         BorderColor3 = Library.OutlineColor;
         Position = UDim2.new(0, 8, 0, 25);
-        Size = UDim2.new(1, -16, 1, -60); -- Made room for tabs at bottom
+        Size = UDim2.new(1, -16, 1, -33);
         ZIndex = 1;
         Parent = Inner;
+    });
+
+    -- Add corner rounding to main section
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 10);
+        Parent = MainSectionOuter;
     });
 
     Library:AddToRegistry(MainSectionOuter, {
@@ -4929,43 +5249,30 @@ function Library:CreateWindow(...)
         Parent = MainSectionOuter;
     });
 
+    -- Add corner rounding to main section inner
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 10);
+        Parent = MainSectionInner;
+    });
+
     Library:AddToRegistry(MainSectionInner, {
         BackgroundColor3 = 'BackgroundColor';
     });
 
-    -- MODIFIED: Tab area at bottom
-    local TabArea = Library:Create('Frame', {
-        BackgroundTransparency = 1;
-        Position = UDim2.new(0, 0, 1, -25);
-        Size = UDim2.new(1, 0, 0, 25);
-        ZIndex = 10;
-        Parent = MainSectionInner;
-    });
-
-    -- Center tabs using UIListLayout with center alignment
-    local TabListLayout = Library:Create('UIListLayout', {
-        Padding = UDim.new(0, Config.TabPadding);
-        FillDirection = Enum.FillDirection.Horizontal;
-        HorizontalAlignment = Enum.HorizontalAlignment.Center;
-        SortOrder = Enum.SortOrder.LayoutOrder;
-        VerticalAlignment = Enum.VerticalAlignment.Center;
-        Parent = TabArea;
-    });
-
-    -- Add padding on sides to ensure centering
-    Library:Create('UIPadding', {
-        PaddingLeft = UDim.new(0, 10),
-        PaddingRight = UDim.new(0, 10),
-        Parent = TabArea;
-    });
-
+    -- MODIFIED: Tab container for content (above tabs)
     local TabContainer = Library:Create('Frame', {
         BackgroundColor3 = Library.MainColor;
         BorderColor3 = Library.OutlineColor;
-        Position = UDim2.new(0, 8, 0, 4);
-        Size = UDim2.new(1, -16, 1, -29);
+        Position = UDim2.new(0, 4, 0, 4);
+        Size = UDim2.new(1, -8, 1, -30); -- Leave space for bottom tabs
         ZIndex = 2;
         Parent = MainSectionInner;
+    });
+
+    -- Add corner rounding to tab container
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 10);
+        Parent = TabContainer;
     });
     
     local InnerVideoBackground = Library:Create('VideoFrame', {
@@ -4980,11 +5287,66 @@ function Library:CreateWindow(...)
         Looped = true;
         Parent = TabContainer;
     });
+
+    -- Add corner rounding to video background
+    Library:Create('UICorner', {
+        CornerRadius = UDim.new(0, 10);
+        Parent = InnerVideoBackground;
+    });
+
     Library.InnerVideoBackground = InnerVideoBackground;
 
     Library:AddToRegistry(TabContainer, {
         BackgroundColor3 = 'MainColor';
         BorderColor3 = 'OutlineColor';
+    });
+
+    -- MODIFIED: Bottom tabs area (horizontal)
+    local BottomTabArea = Library:Create('ScrollingFrame', {
+        ScrollingDirection = Enum.ScrollingDirection.X;
+        CanvasSize = UDim2.new(0, 0, 0, 0);
+        AutomaticCanvasSize = Enum.AutomaticSize.X;
+        ScrollBarThickness = 3;
+        ScrollBarImageColor3 = Library.AccentColor;
+        BackgroundTransparency = 1;
+        Position = UDim2.new(0, 4, 1, -26);
+        Size = UDim2.new(1, -8, 0, 26);
+        ZIndex = 1;
+        Parent = MainSectionInner;
+    });
+
+    Library:AddToRegistry(BottomTabArea, {
+        ScrollBarImageColor3 = 'AccentColor';
+    });
+
+    local TabListLayout = Library:Create('UIListLayout', {
+        Padding = UDim.new(0, Config.TabPadding);
+        FillDirection = Enum.FillDirection.Horizontal;
+        SortOrder = Enum.SortOrder.LayoutOrder;
+        VerticalAlignment = Enum.VerticalAlignment.Center;
+        Parent = BottomTabArea;
+    });
+
+    -- Add left spacer
+    Library:Create('Frame', {
+        BackgroundColor3 = Library.BackgroundColor;
+        BorderColor3 = Library.OutlineColor;
+        Size = UDim2.new(0, 0, 0, 0);
+        LayoutOrder = -1;
+        BackgroundTransparency = 1;
+        ZIndex = 1;
+        Parent = BottomTabArea;
+    });
+
+    -- Add right spacer
+    Library:Create('Frame', {
+        BackgroundColor3 = Library.BackgroundColor;
+        BorderColor3 = Library.OutlineColor;
+        Size = UDim2.new(0, 0, 0, 0);
+        LayoutOrder = 9999999;
+        BackgroundTransparency = 1;
+        ZIndex = 1;
+        Parent = BottomTabArea;
     });
 
     function Window:SetWindowTitle(Title)
@@ -4994,24 +5356,29 @@ function Library:CreateWindow(...)
         end
     end;
 
+    -- MODIFIED: Updated AddTab for bottom tabs
     function Window:AddTab(Name)
         local Tab = {
             Groupboxes = {};
             Tabboxes = {};
-
             OriginalName = Name; Name = Name;
         };
 
-        -- MODIFIED: Create tab button with fixed height for bottom placement
+        -- Create bottom tab button
         local TabButtonWidth = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 12;
-        local TabButtonHeight = 20;
-
+        
         local TabButton = Library:Create('Frame', {
             BackgroundColor3 = Library.BackgroundColor;
             BorderColor3 = Library.OutlineColor;
-            Size = UDim2.new(0, TabButtonWidth, 0, TabButtonHeight);
-            ZIndex = 11;
-            Parent = TabArea;
+            Size = UDim2.new(0, TabButtonWidth, 0.85, 0);
+            ZIndex = 1;
+            Parent = BottomTabArea;
+        });
+
+        -- Add corner rounding to tab button
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 6);
+            Parent = TabButton;
         });
 
         Library:AddToRegistry(TabButton, {
@@ -5024,19 +5391,19 @@ function Library:CreateWindow(...)
             Size = UDim2.new(1, -8, 1, -4);
             Text = Tab.Name;
             TextSize = 14;
-            TextWrapped = false;
-            RichText = true;
-            ZIndex = 12;
+            TextWrapped = true;
+            RichText = true; -- Added to support color fonts
+            ZIndex = 1;
             Parent = TabButton;
         });
 
         local Blocker = Library:Create('Frame', {
             BackgroundColor3 = Library.MainColor;
             BorderSizePixel = 0;
-            Position = UDim2.new(0, 0, 1, -1);
+            Position = UDim2.new(0, 0, 0, -1);
             Size = UDim2.new(1, 0, 0, 1);
             BackgroundTransparency = 1;
-            ZIndex = 13;
+            ZIndex = 3;
             Parent = TabButton;
         });
 
@@ -5044,6 +5411,7 @@ function Library:CreateWindow(...)
             BackgroundColor3 = 'MainColor';
         });
 
+        -- Tab content frame
         local TabFrame = Library:Create('Frame', {
             Name = 'TabFrame',
             BackgroundTransparency = 1;
@@ -5054,9 +5422,9 @@ function Library:CreateWindow(...)
             Parent = TabContainer;
         });
 
-        local TopBarLabelStroke
-        local TopBarHighlight
-        local TopBar, TopBarInner, TopBarLabel, TopBarTextLabel; do
+        -- Top warning bar (same as original)
+        local TopBar, TopBarInner, TopBarLabel, TopBarTextLabel, TopBarLabelStroke, TopBarHighlight; 
+        do
             TopBar = Library:Create('Frame', {
                 BackgroundColor3 = Library.BackgroundColor;
                 BorderColor3 = Color3.fromRGB(248, 51, 51);
@@ -5068,6 +5436,12 @@ function Library:CreateWindow(...)
                 Visible = false;
             });
 
+            -- Add corner rounding to top bar
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 6);
+                Parent = TopBar;
+            });
+
             TopBarInner = Library:Create('Frame', {
                 BackgroundColor3 = Color3.fromRGB(117, 22, 17);
                 BorderColor3 = Color3.new();
@@ -5075,6 +5449,12 @@ function Library:CreateWindow(...)
                 Position = UDim2.new(0, 1, 0, 1);
                 ZIndex = 4;
                 Parent = TopBar;
+            });
+
+            -- Add corner rounding to top bar inner
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 6);
+                Parent = TopBarInner;
             });
 
             TopBarHighlight = Library:Create('Frame', {
@@ -5125,6 +5505,7 @@ function Library:CreateWindow(...)
             });
         end
         
+        -- Left and right content sides (same as original)
         local LeftSide = Library:Create('ScrollingFrame', {
             BackgroundTransparency = 1;
             BorderSizePixel = 0;
@@ -5301,7 +5682,7 @@ function Library:CreateWindow(...)
             if typeof(Name) == "string" then
                 Tab.Name = Name;
                 local TabButtonWidth = Library:GetTextBounds(Tab.Name, Library.Font, 16) + 12;
-                TabButton.Size = UDim2.new(0, TabButtonWidth, 0, 20);
+                TabButton.Size = UDim2.new(0, TabButtonWidth, 0.85, 0);
                 TabButtonLabel.Text = Tab.Name;
             end
         end;
@@ -5318,6 +5699,12 @@ function Library:CreateWindow(...)
                 Parent = Info.Side == 1 and LeftSide or RightSide;
             });
 
+            -- Add corner rounding to groupbox
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 8);
+                Parent = BoxOuter;
+            });
+
             Library:AddToRegistry(BoxOuter, {
                 BackgroundColor3 = 'BackgroundColor';
                 BorderColor3 = 'OutlineColor';
@@ -5330,6 +5717,12 @@ function Library:CreateWindow(...)
                 Position = UDim2.new(0, 1, 0, 1);
                 ZIndex = 4;
                 Parent = BoxOuter;
+            });
+
+            -- Add corner rounding to groupbox inner
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 8);
+                Parent = BoxInner;
             });
 
             Library:AddToRegistry(BoxInner, {
@@ -5416,6 +5809,12 @@ function Library:CreateWindow(...)
                 Parent = Info.Side == 1 and LeftSide or RightSide;
             });
 
+            -- Add corner rounding to tabbox
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 8);
+                Parent = BoxOuter;
+            });
+
             Library:AddToRegistry(BoxOuter, {
                 BackgroundColor3 = 'BackgroundColor';
                 BorderColor3 = 'OutlineColor';
@@ -5428,6 +5827,12 @@ function Library:CreateWindow(...)
                 Position = UDim2.new(0, 1, 0, 1);
                 ZIndex = 4;
                 Parent = BoxOuter;
+            });
+
+            -- Add corner rounding to tabbox inner
+            Library:Create('UICorner', {
+                CornerRadius = UDim.new(0, 8);
+                Parent = BoxInner;
             });
 
             Library:AddToRegistry(BoxInner, {
@@ -5470,6 +5875,12 @@ function Library:CreateWindow(...)
                     Size = UDim2.new(0.5, 0, 1, 0);
                     ZIndex = 6;
                     Parent = TabboxButtons;
+                });
+
+                -- Add corner rounding to tab button
+                Library:Create('UICorner', {
+                    CornerRadius = UDim.new(0, 4);
+                    Parent = Button;
                 });
 
                 Library:AddToRegistry(Button, {
@@ -5742,6 +6153,12 @@ function Library:CreateWindow(...)
             Visible = true;
             Parent = ScreenGui;
         });
+
+        -- Add corner rounding to mobile toggle button
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 8);
+            Parent = ToggleUIOuter;
+        });
     
         local ToggleUIInner = Library:Create('Frame', {
             BackgroundColor3 = Library.MainColor;
@@ -5750,6 +6167,12 @@ function Library:CreateWindow(...)
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 201;
             Parent = ToggleUIOuter;
+        });
+
+        -- Add corner rounding to mobile toggle inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 8);
+            Parent = ToggleUIInner;
         });
     
         Library:AddToRegistry(ToggleUIInner, {
@@ -5763,6 +6186,12 @@ function Library:CreateWindow(...)
             Size = UDim2.new(1, -2, 1, -2);
             ZIndex = 202;
             Parent = ToggleUIInner;
+        });
+
+        -- Add corner rounding to mobile toggle inner frame
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 8);
+            Parent = ToggleUIInnerFrame;
         });
     
         local ToggleUIGradient = Library:Create('UIGradient', {
@@ -5804,6 +6233,7 @@ function Library:CreateWindow(...)
             Library:Toggle()
         end)
 
+        -- Lock UI button
         local LockUIOuter = Library:Create('Frame', {
             BorderColor3 = Color3.new(0, 0, 0);
             Position = UDim2.new(0.008, 0, 0.075, 0);
@@ -5811,6 +6241,12 @@ function Library:CreateWindow(...)
             ZIndex = 200;
             Visible = true;
             Parent = ScreenGui;
+        });
+
+        -- Add corner rounding to lock button
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 8);
+            Parent = LockUIOuter;
         });
     
         local LockUIInner = Library:Create('Frame', {
@@ -5820,6 +6256,12 @@ function Library:CreateWindow(...)
             Size = UDim2.new(1, 0, 1, 0);
             ZIndex = 201;
             Parent = LockUIOuter;
+        });
+
+        -- Add corner rounding to lock inner
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 8);
+            Parent = LockUIInner;
         });
     
         Library:AddToRegistry(LockUIInner, {
@@ -5833,6 +6275,12 @@ function Library:CreateWindow(...)
             Size = UDim2.new(1, -2, 1, -2);
             ZIndex = 202;
             Parent = LockUIInner;
+        });
+
+        -- Add corner rounding to lock inner frame
+        Library:Create('UICorner', {
+            CornerRadius = UDim.new(0, 8);
+            Parent = LockUIInnerFrame;
         });
     
         local LockUIGradient = Library:Create('UIGradient', {
