@@ -49,18 +49,18 @@ local ThemeManager = {} do
 		['Tokyo Night'] 	= { 6, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"191925","AccentColor":"6759b3","BackgroundColor":"16161f","OutlineColor":"323232"}') },
 		['Ubuntu'] 			= { 7, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"3e3e3e","AccentColor":"e2581e","BackgroundColor":"323232","OutlineColor":"191919"}') },
 		['Quartz'] 			= { 8, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"232330","AccentColor":"426e87","BackgroundColor":"1d1b26","OutlineColor":"27232f"}') },
-		-- New ryze theme with dark red color scheme (#8B0000)
-		['ryze'] 			= { 9, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1a1a1a","AccentColor":"8B0000","BackgroundColor":"232323","OutlineColor":"3a3a3a"}') },
+		-- New ryze theme with nice red color scheme
+		['ryze'] 			= { 9, httpService:JSONDecode('{"FontColor":"ffffff","MainColor":"1a1a1a","AccentColor":"ff3b3b","BackgroundColor":"232323","OutlineColor":"3a3a3a"}') },
 	}
 
 	-- Force apply ryze theme on initialization
 	ThemeManager.ForceTheme = function(self)
 		if not self.Library then return end
 		
-		-- Force set the ryze theme colors directly (dark red scheme #8B0000)
+		-- Force set the ryze theme colors directly (nice red scheme)
 		self.Library.BackgroundColor = Color3.fromHex("#232323")
 		self.Library.MainColor = Color3.fromHex("#1a1a1a")
-		self.Library.AccentColor = Color3.fromHex("#8B0000") -- Dark red accent
+		self.Library.AccentColor = Color3.fromHex("#ff3b3b") -- Bright red accent
 		self.Library.OutlineColor = Color3.fromHex("#3a3a3a")
 		self.Library.FontColor = Color3.fromHex("#ffffff")
 		
@@ -75,7 +75,7 @@ local ThemeManager = {} do
 			local options = {
 				BackgroundColor = Color3.fromHex("#232323"),
 				MainColor = Color3.fromHex("#1a1a1a"),
-				AccentColor = Color3.fromHex("#8B0000"),
+				AccentColor = Color3.fromHex("#ff3b3b"),
 				OutlineColor = Color3.fromHex("#3a3a3a"),
 				FontColor = Color3.fromHex("#ffffff")
 			}
@@ -322,7 +322,7 @@ local ThemeManager = {} do
 	function ThemeManager:CreateThemeManager(groupbox)
 		groupbox:AddLabel('Background color'):AddColorPicker('BackgroundColor', { Default = Color3.fromHex("#232323") });
 		groupbox:AddLabel('Main color'):AddColorPicker('MainColor', { Default = Color3.fromHex("#1a1a1a") });
-		groupbox:AddLabel('Accent color'):AddColorPicker('AccentColor', { Default = Color3.fromHex("#8B0000") }); -- Dark red accent
+		groupbox:AddLabel('Accent color'):AddColorPicker('AccentColor', { Default = Color3.fromHex("#ff3b3b") }); -- Bright red accent
 		groupbox:AddLabel('Outline color'):AddColorPicker('OutlineColor', { Default = Color3.fromHex("#3a3a3a") });
 		groupbox:AddLabel('Font color'):AddColorPicker('FontColor', { Default = Color3.fromHex("#ffffff") });
 
